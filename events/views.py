@@ -8,6 +8,7 @@ from .serializers import EventSerializer
 from .filters import EventFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class EventViewSet(ModelViewSet):
@@ -32,6 +33,11 @@ class EventViewSet(ModelViewSet):
         'name',
         'start_at',
         'end_at',
+    ]
+
+    parser_classes = [
+        MultiPartParser,
+        FormParser,
     ]
 
     ordering = ['start_at']

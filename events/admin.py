@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Event
+from .models import EventImage
 
 
 @admin.register(Event)
@@ -22,4 +23,14 @@ class EventAdmin(admin.ModelAdmin):
     search_fields = (
         'name',
         'description',
+    )
+
+
+@admin.register(EventImage)
+class EventImageAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'id',
+        'event',
+        'created_at',
     )

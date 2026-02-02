@@ -1,5 +1,17 @@
 from rest_framework import serializers
 from .models import Event
+from .models import EventImage
+
+
+class EventImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = EventImage
+        fields = [
+            'id',
+            'image',
+            'preview',
+        ]
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -7,6 +19,10 @@ class EventSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     place_name = serializers.CharField(
         source='place.name',
+        read_only=True
+    )
+    images = EventImageSerializer(
+        many=True,
         read_only=True
     )
 
@@ -26,4 +42,5 @@ class EventSerializer(serializers.ModelSerializer):
             'place_name',
             'created_at',
             'updated_at',
+            'images',
         ]

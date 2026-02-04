@@ -5,12 +5,17 @@ from .models import EventImage
 
 class EventImageSerializer(serializers.ModelSerializer):
 
+    image = serializers.ImageField()
+    preview = serializers.ImageField(read_only=True)
+
     class Meta:
         model = EventImage
         fields = [
             'id',
+            'event',
             'image',
             'preview',
+            'created_at',
         ]
 
 

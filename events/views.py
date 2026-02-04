@@ -3,12 +3,13 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser, AllowAny
 from django.utils import timezone
 
-from .models import Event
-from .serializers import EventSerializer
+from .models import Event, EventImage
+from .serializers import EventSerializer, EventImageSerializer
 from .filters import EventFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.parsers import MultiPartParser, FormParser
+from drf_spectacular.utils import extend_schema
 
 
 class EventViewSet(ModelViewSet):
@@ -35,10 +36,10 @@ class EventViewSet(ModelViewSet):
         'end_at',
     ]
 
-    parser_classes = [
-        MultiPartParser,
-        FormParser,
-    ]
+    # parser_classes = [
+    #     MultiPartParser,
+    #     FormParser,
+    # ]
 
     ordering = ['start_at']
 
@@ -66,3 +67,15 @@ class EventViewSet(ModelViewSet):
     def perform_create(self, serializer):
 
         serializer.save(author=self.request.user)
+
+
+@extend_schema(
+    request={
+        "multipart/form-data": EventImageSerializer
+    }
+)
+class EventImageViewSet(ModelViewSet):
+    queryset = EventImage.objects.all()
+    serializer_class = EventImageSerializer
+
+    parser_classes = [MultiPartParser, FormParser]

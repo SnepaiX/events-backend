@@ -4,7 +4,7 @@ from .models import EventImage
 
 
 class EventImageSerializer(serializers.ModelSerializer):
-
+    event = serializers.IntegerField()
     image = serializers.ImageField()
     preview = serializers.ImageField(read_only=True)
 
@@ -20,7 +20,6 @@ class EventImageSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
-
     author = serializers.StringRelatedField(read_only=True)
     place_name = serializers.CharField(
         source='place.name',
@@ -49,3 +48,7 @@ class EventSerializer(serializers.ModelSerializer):
             'updated_at',
             'images',
         ]
+
+
+class ImportXlsxSerializer(serializers.Serializer):
+    file = serializers.FileField()

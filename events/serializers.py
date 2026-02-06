@@ -1,10 +1,8 @@
 from rest_framework import serializers
-from .models import Event
-from .models import EventImage
+from .models import Event, EventImage
 
 
 class EventImageSerializer(serializers.ModelSerializer):
-    event = serializers.IntegerField()
     image = serializers.ImageField()
     preview = serializers.ImageField(read_only=True)
 
